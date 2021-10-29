@@ -12,10 +12,16 @@ class TodoRepositorImpl : TodoRepository{//내가 만든 인터 페이스 가져
     lateinit var todoDataBase: TodoDataBase //내가 만든 데이터 베이스 불러오기
 
     override fun save(todo: Todo): Todo {
-        var index=todoDataBase.index++ //데이터 베이스에 마지막 인덱스 추가
-        todo.index=index
-        todoDataBase.todoList.add(todo)
-        return todoDataBase.todoList as Todo  //강의내용과 다르게 자바방식으로 해서 문제시 강의 20분으로
+
+        return todo.apply {
+            this.index=++todoDataBase.index //데이터 베이스에 마지막 인덱스 추가 꼭 앞에 ++해줘야 1+되고 실행한다
+        }.run {
+            todoDataBase.todoList.add(todo)
+            this
+            //Todo를 리턴
+        }
+
+
     }
 
     override fun saveAll(todoList: MutableList<Todo>): Boolean {
