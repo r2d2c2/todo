@@ -1,7 +1,7 @@
 package com.example.todo.database
 
 import java.time.LocalDateTime
-
+//데이터 베이스
 data class Todo(
     var index:Int?=null,   //일정 인덱스
     var title:String?=null, //일정 타이틀
