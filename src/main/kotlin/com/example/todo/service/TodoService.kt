@@ -22,18 +22,24 @@ class TodoService(
         }
     }
 
-    fun read(index:Int):Todo?{
-        return todoRepositorImpl.findOne(index)
+    fun read(index:Int):TodoDto?{
+        return todoRepositorImpl.findOne(index)?.let {
+            TodoDto().convertTodo(it)
+        }
     }
-    fun readAll():MutableList<Todo>{
-        return todoRepositorImpl.findAll()
+    fun readAll():MutableList<TodoDto>{
+        return todoRepositorImpl.findAll().map {
+            TodoDto().convertTodo(it)
+        }.toMutableList()
     }
 
-    fun update(todoDto: TodoDto): Todo?{
+    fun update(todoDto: TodoDto): TodoDto?{
         return todoDto.let {
             Todo().convertTodoDto(it)
         }.let {
             todoRepositorImpl.save(it)
+        }?.let {
+            TodoDto().convertTodo(it)
         }
     }
 
